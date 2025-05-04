@@ -1,4 +1,4 @@
-GENDER,AGE,SMOKING,YELLOW_FINGERS,ANXIETY,PEER_PRESSURE,CHRONIC DISEASE,FATIGUE ,ALLERGY ,WHEEZING,ALCOHOL CONSUMING,COUGHING,SHORTNESS OF BREATH,SWALLOWING DIFFICULTY,CHEST PAIN,LUNG_CANCER
+gender,age,smoking,yellow_fingers,anxiety,peer_pressure,chronic disease,fatigue,allergy,wheezing,alcohol consuming,coughing,shortness of breath,swallowing difficulty,chest pain,lung_cancer
 M,69,1,2,2,1,1,2,1,2,2,2,2,2,2,YES
 M,74,2,1,1,1,2,2,2,1,1,1,2,2,2,YES
 F,59,1,1,1,2,1,2,1,2,1,2,2,1,2,NO
