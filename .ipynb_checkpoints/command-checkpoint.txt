@@ -1,0 +1,7 @@
+pip install streamlit
+pip install pickle5
+pip install streamlit-option-menu
+
+streamlit run app.py
+
+pip install -r requirements.txt
