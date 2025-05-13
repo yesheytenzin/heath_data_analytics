@@ -1,4 +1,4 @@
-2streamlit-option-menu
+streamlit-option-menu
 scikit-learn
 
 heart - decision tree
