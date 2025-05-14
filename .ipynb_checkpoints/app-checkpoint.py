@@ -7,15 +7,25 @@ from streamlit_option_menu import option_menu
 # Load models
 heart_disease_model = pickle.load(open('model/heart_disease_model.sav', 'rb'))
 lung_cancer_model = pickle.load(open('model/lung_cancer_model.sav', 'rb'))
+kidney_disease_model = pickle.load(open('model/kidney_disease_model.sav', 'rb'))
+
 
 # Sidebar navigation
 with st.sidebar:
     selected = option_menu(
-        'Health App Menu',
-        ['Heart Disease Predictor', 'Heart Data Visualizer', 'Lung Cancer Predictor', 'Lung Data Visualizer'],
-        icons=['heart', 'bar-chart', 'lungs'],
-        default_index=0
-    )
+    'Health App Menu',
+    [
+        'Heart Disease Predictor',
+        'Heart Data Visualizer',
+        'Lung Cancer Predictor',
+        'Lung Data Visualizer',
+        'Kidney Disease Predictor',
+        'Kidney Data Visualizer'
+    ],
+    icons=['heart', 'bar-chart', 'lungs', 'bar-chart', 'droplet', 'bar-chart'],
+    default_index=0
+)
+
 
 if selected == 'Heart Disease Predictor':
     st.title('❤️ Heart Disease Prediction using ML')
@@ -224,4 +234,143 @@ elif selected == 'Lung Data Visualizer':
 
     except FileNotFoundError:
         st.error("⚠️ 'lung.csv' not found. Please ensure it's in the 'data_preprocessed/' folder.")
+
+elif selected == 'Kidney Disease Predictor':
+    st.title("🩸 Kidney Disease Prediction using ML")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        age = st.slider('Age', 20, 90, 50)
+        gender = st.selectbox('Gender (0=Female, 1=Male)', [0, 1])
+        ethnicity = st.selectbox('Ethnicity (0–3)', [0, 1, 2, 3])
+        ses = st.selectbox('Socioeconomic Status (0–2)', [0, 1, 2])
+        edu = st.selectbox('Education Level (0–3)', [0, 1, 2, 3])
+        bmi = st.number_input('BMI', 10.0, 50.0, 24.0)
+        smoking = st.selectbox('Smoking (0=No, 1=Yes)', [0, 1])
+        alcohol = st.number_input('Alcohol Consumption (units/week)', 0.0, 100.0, 10.0)
+        activity = st.number_input('Physical Activity (hrs/week)', 0.0, 20.0, 5.0)
+        diet = st.number_input('Diet Quality (0–10)', 0.0, 10.0, 5.0)
+        sleep = st.number_input('Sleep Quality (0–10)', 0.0, 10.0, 7.0)
+        family_kidney = st.selectbox('Family History of Kidney Disease', [0, 1])
+        family_hyper = st.selectbox('Family History of Hypertension', [0, 1])
+        family_diabetes = st.selectbox('Family History of Diabetes', [0, 1])
+        prev_aki = st.selectbox('Previous Acute Kidney Injury', [0, 1])
+        uti = st.selectbox('Urinary Tract Infections', [0, 1])
+
+    with col2:
+        sbp = st.slider('Systolic BP', 90, 180, 120)
+        dbp = st.slider('Diastolic BP', 60, 120, 80)
+        fbs = st.number_input('Fasting Blood Sugar', 60.0, 300.0, 100.0)
+        hba1c = st.number_input('HbA1c (%)', 4.0, 15.0, 6.0)
+        creat = st.number_input('Serum Creatinine (mg/dL)', 0.5, 10.0, 1.0)
+        bun = st.number_input('BUN Levels', 5.0, 50.0, 15.0)
+        gfr = st.number_input('GFR', 5.0, 120.0, 60.0)
+        protein = st.number_input('Protein in Urine', 0.0, 10.0, 1.0)
+        acr = st.number_input('ACR', 0.0, 1000.0, 100.0)
+        na = st.number_input('Sodium', 120.0, 160.0, 138.0)
+        k = st.number_input('Potassium', 2.5, 6.5, 4.5)
+        ca = st.number_input('Calcium', 7.0, 11.5, 9.5)
+        phos = st.number_input('Phosphorus', 2.0, 6.0, 3.5)
+        hemo = st.number_input('Hemoglobin', 6.0, 20.0, 14.0)
+
+    with col3:
+        chol = st.number_input('Total Cholesterol', 100.0, 400.0, 200.0)
+        ldl = st.number_input('LDL', 50.0, 250.0, 100.0)
+        hdl = st.number_input('HDL', 20.0, 100.0, 50.0)
+        trig = st.number_input('Triglycerides', 50.0, 600.0, 150.0)
+        ace = st.selectbox('ACE Inhibitors (0=No, 1=Yes)', [0, 1])
+        diuretic = st.selectbox('Diuretics (0=No, 1=Yes)', [0, 1])
+        nsaid = st.number_input('NSAIDs Use (hours/week)', 0.0, 20.0, 2.0)
+        statin = st.selectbox('Statins (0=No, 1=Yes)', [0, 1])
+        antidiabetic = st.selectbox('Antidiabetic Medications', [0, 1])
+        edema = st.selectbox('Edema', [0, 1])
+        fatigue = st.number_input('Fatigue Level (0–10)', 0.0, 10.0, 5.0)
+        nausea = st.number_input('Nausea/Vomiting (0–10)', 0.0, 10.0, 2.0)
+        cramps = st.number_input('Muscle Cramps (0–10)', 0.0, 10.0, 2.0)
+        itching = st.number_input('Itching (0–10)', 0.0, 10.0, 3.0)
+        qol = st.number_input('Quality of Life Score (0–100)', 0.0, 100.0, 70.0)
+        metals = st.selectbox('Heavy Metals Exposure', [0, 1])
+        chem = st.selectbox('Occupational Chemical Exposure', [0, 1])
+        water = st.selectbox('Water Quality Issues', [0, 1])
+        checkups = st.number_input('Medical Checkups per Year', 0.0, 12.0, 2.0)
+        adherence = st.number_input('Medication Adherence (0–10)', 0.0, 10.0, 5.0)
+        literacy = st.number_input('Health Literacy (0–10)', 0.0, 10.0, 7.0)
+
+    if st.button('Kidney Disease Test Result'):
+        input_data = [
+            age, gender, ethnicity, ses, edu, bmi, smoking,
+            alcohol, activity, diet, sleep, family_kidney, family_hyper, family_diabetes,
+            prev_aki, uti, sbp, dbp, fbs, hba1c, creat, bun, gfr, protein, acr,
+            na, k, ca, phos, hemo, chol, ldl, hdl, trig, ace, diuretic, nsaid,
+            statin, antidiabetic, edema, fatigue, nausea, cramps, itching, qol,
+            metals, chem, water, checkups, adherence, literacy
+        ]
+
+        try:
+            prediction = kidney_disease_model.predict([input_data])
+            if prediction[0] == 1:
+                st.success("⚠️ The person **may have** kidney disease.")
+            else:
+                st.success("✅ The person **does not show signs** of kidney disease.")
+        except Exception as e:
+            st.error(f"Prediction failed: {e}")
+
+
+elif selected == 'Kidney Data Visualizer':
+    st.title("📊 Explore & Visualize Kidney Dataset")
+
+    try:
+        df = pd.read_csv('data_preprocessed/kidney.csv')
+
+        st.subheader("Dataset Preview")
+        st.dataframe(df.head())
+
+        vis_type = st.selectbox("Select Visualization Type", ['Univariate', 'Bivariate', 'Multivariate'])
+
+        if vis_type == 'Univariate':
+            col = st.selectbox("Select a column", df.columns)
+            plot_type = st.radio("Plot Type", ['Histogram', 'Boxplot', 'Line Chart'])
+
+            st.subheader(f"{plot_type} of {col}")
+            fig, ax = plt.subplots()
+            if plot_type == 'Histogram':
+                ax.hist(df[col].dropna(), bins=20, color='limegreen', edgecolor='black')
+            elif plot_type == 'Boxplot':
+                ax.boxplot(df[col].dropna())
+            elif plot_type == 'Line Chart':
+                ax.plot(df[col].dropna(), color='olive')
+            ax.set_title(f"{plot_type} of {col}")
+            st.pyplot(fig)
+
+        elif vis_type == 'Bivariate':
+            x_col = st.selectbox("Select X-axis", df.columns, key='kid_biv_x')
+            y_col = st.selectbox("Select Y-axis", df.columns, key='kid_biv_y')
+            plot_type = st.radio("Plot Type", ['Scatter Plot', 'Line Plot'])
+
+            st.subheader(f"{plot_type} of {x_col} vs {y_col}")
+            fig, ax = plt.subplots()
+            if plot_type == 'Scatter Plot':
+                ax.scatter(df[x_col], df[y_col], alpha=0.7, color='darkgreen')
+            elif plot_type == 'Line Plot':
+                ax.plot(df[x_col], df[y_col], color='forestgreen')
+            ax.set_xlabel(x_col)
+            ax.set_ylabel(y_col)
+            ax.set_title(f"{x_col} vs {y_col}")
+            st.pyplot(fig)
+
+        elif vis_type == 'Multivariate':
+            st.subheader("Correlation Heatmap")
+            corr = df.corr(numeric_only=True)
+            fig, ax = plt.subplots()
+            im = ax.imshow(corr, cmap='Greens', interpolation='nearest')
+            ax.set_xticks(range(len(corr.columns)))
+            ax.set_yticks(range(len(corr.columns)))
+            ax.set_xticklabels(corr.columns, rotation=90)
+            ax.set_yticklabels(corr.columns)
+            fig.colorbar(im, ax=ax)
+            st.pyplot(fig)
+
+    except FileNotFoundError:
+        st.error("⚠️ 'kidney.csv' not found. Please ensure it's in the 'data_preprocessed/' folder.")
 
