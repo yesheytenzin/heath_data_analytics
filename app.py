@@ -17,15 +17,12 @@ with st.sidebar:
     'Health App Menu',
     [
         'Heart Disease Predictor',
-        'Heart Data Visualizer',
         'Lung Cancer Predictor',
-        'Lung Data Visualizer',
         'Diabetes Predictor',
-        'Diabetes Data Visualizer',
         'Kidney Disease Predictor',
-        'Kidney Data Visualizer'
+        'visualizer'
     ],
-    icons=['heart', 'bar-chart', 'lungs', 'bar-chart', 'activity', 'bar-chart', 'droplet', 'bar-chart'],
+    icons=['heart', 'lungs', 'activity', 'droplet', 'bar-chart'],
     default_index=0
 )
 
@@ -67,63 +64,6 @@ if selected == 'Heart Disease Predictor':
         except Exception as e:
             st.error(f"Prediction failed: {e}")
 
-
-# --- Heart Data Visualizer ---
-elif selected == 'Heart Data Visualizer':
-    st.title("📊 Explore & Visualize Heart Dataset")
-
-    try:
-        df = pd.read_csv('data_preprocessed/heart.csv')
-        st.subheader("Dataset Preview")
-        st.dataframe(df.head())
-
-        vis_type = st.selectbox("Select Visualization Type", ['Univariate', 'Bivariate', 'Multivariate'])
-
-        if vis_type == 'Univariate':
-            col = st.selectbox("Select a column", df.columns)
-            plot_type = st.radio("Plot Type", ['Histogram', 'Boxplot', 'Line Chart'])
-
-            st.subheader(f"{plot_type} of {col}")
-            fig, ax = plt.subplots()
-            if plot_type == 'Histogram':
-                ax.hist(df[col].dropna(), bins=20, color='skyblue', edgecolor='black')
-            elif plot_type == 'Boxplot':
-                ax.boxplot(df[col].dropna())
-            elif plot_type == 'Line Chart':
-                ax.plot(df[col].dropna(), color='green')
-            ax.set_title(f"{plot_type} of {col}")
-            st.pyplot(fig)
-
-        elif vis_type == 'Bivariate':
-            x_col = st.selectbox("Select X-axis", df.columns, key='biv_x')
-            y_col = st.selectbox("Select Y-axis", df.columns, key='biv_y')
-            plot_type = st.radio("Plot Type", ['Scatter Plot', 'Line Plot'])
-
-            st.subheader(f"{plot_type} of {x_col} vs {y_col}")
-            fig, ax = plt.subplots()
-            if plot_type == 'Scatter Plot':
-                ax.scatter(df[x_col], df[y_col], alpha=0.7, color='purple')
-            elif plot_type == 'Line Plot':
-                ax.plot(df[x_col], df[y_col], color='blue')
-            ax.set_xlabel(x_col)
-            ax.set_ylabel(y_col)
-            ax.set_title(f"{x_col} vs {y_col}")
-            st.pyplot(fig)
-
-        elif vis_type == 'Multivariate':
-            st.subheader("Correlation Heatmap")
-            corr = df.corr(numeric_only=True)
-            fig, ax = plt.subplots()
-            im = ax.imshow(corr, cmap='coolwarm', interpolation='nearest')
-            ax.set_xticks(range(len(corr.columns)))
-            ax.set_yticks(range(len(corr.columns)))
-            ax.set_xticklabels(corr.columns, rotation=90)
-            ax.set_yticklabels(corr.columns)
-            fig.colorbar(im, ax=ax)
-            st.pyplot(fig)
-
-    except FileNotFoundError:
-        st.error("⚠️ 'heart.csv' not found. Please ensure it's in the 'data_preprocessed/' folder.")
 
 # --- Lung Cancer Prediction ---
 import streamlit as st
@@ -180,64 +120,6 @@ if selected == 'Lung Cancer Predictor':
             st.error(f"Prediction failed: {e}")
 
 
-# --- Lung Data Visualizer ---
-elif selected == 'Lung Data Visualizer':
-    st.title("📊 Explore & Visualize Lung Cancer Dataset")
-
-    try:
-        df = pd.read_csv('data_preprocessed/lung.csv')  # Ensure this file exists
-
-        st.subheader("Dataset Preview")
-        st.dataframe(df.head())
-
-        vis_type = st.selectbox("Select Visualization Type", ['Univariate', 'Bivariate', 'Multivariate'])
-
-        if vis_type == 'Univariate':
-            col = st.selectbox("Select a column", df.columns)
-            plot_type = st.radio("Plot Type", ['Histogram', 'Boxplot', 'Line Chart'])
-
-            st.subheader(f"{plot_type} of {col}")
-            fig, ax = plt.subplots()
-            if plot_type == 'Histogram':
-                ax.hist(df[col].dropna(), bins=20, color='orange', edgecolor='black')
-            elif plot_type == 'Boxplot':
-                ax.boxplot(df[col].dropna())
-            elif plot_type == 'Line Chart':
-                ax.plot(df[col].dropna(), color='brown')
-            ax.set_title(f"{plot_type} of {col}")
-            st.pyplot(fig)
-
-        elif vis_type == 'Bivariate':
-            x_col = st.selectbox("Select X-axis", df.columns, key='lung_biv_x')
-            y_col = st.selectbox("Select Y-axis", df.columns, key='lung_biv_y')
-            plot_type = st.radio("Plot Type", ['Scatter Plot', 'Line Plot'])
-
-            st.subheader(f"{plot_type} of {x_col} vs {y_col}")
-            fig, ax = plt.subplots()
-            if plot_type == 'Scatter Plot':
-                ax.scatter(df[x_col], df[y_col], alpha=0.7, color='teal')
-            elif plot_type == 'Line Plot':
-                ax.plot(df[x_col], df[y_col], color='gray')
-            ax.set_xlabel(x_col)
-            ax.set_ylabel(y_col)
-            ax.set_title(f"{x_col} vs {y_col}")
-            st.pyplot(fig)
-
-        elif vis_type == 'Multivariate':
-            st.subheader("Correlation Heatmap")
-            corr = df.corr(numeric_only=True)
-            fig, ax = plt.subplots()
-            im = ax.imshow(corr, cmap='YlGnBu', interpolation='nearest')
-            ax.set_xticks(range(len(corr.columns)))
-            ax.set_yticks(range(len(corr.columns)))
-            ax.set_xticklabels(corr.columns, rotation=90)
-            ax.set_yticklabels(corr.columns)
-            fig.colorbar(im, ax=ax)
-            st.pyplot(fig)
-
-    except FileNotFoundError:
-        st.error("⚠️ 'lung.csv' not found. Please ensure it's in the 'data_preprocessed/' folder.")
-
 elif selected == 'Diabetes Predictor':
     st.title('🩸 Diabetes Prediction (Scaled Data Version)')
 
@@ -287,60 +169,6 @@ elif selected == 'Diabetes Predictor':
             st.error(f"Prediction failed: {e}")
 
 
-elif selected == 'Diabetes Data Visualizer':
-    st.title("📊 Explore & Visualize Diabetes Dataset")
-
-    try:
-        df = pd.read_csv('data_preprocessed/diabetes.csv')
-        st.subheader("Dataset Preview")
-        st.dataframe(df.head())
-
-        vis_type = st.selectbox("Select Visualization Type", ['Univariate', 'Bivariate', 'Multivariate'])
-
-        if vis_type == 'Univariate':
-            col = st.selectbox("Select a column", df.columns)
-            plot_type = st.radio("Plot Type", ['Histogram', 'Boxplot', 'Line Chart'])
-
-            fig, ax = plt.subplots()
-            if plot_type == 'Histogram':
-                ax.hist(df[col].dropna(), bins=20, color='salmon', edgecolor='black')
-            elif plot_type == 'Boxplot':
-                ax.boxplot(df[col].dropna())
-            elif plot_type == 'Line Chart':
-                ax.plot(df[col].dropna(), color='darkred')
-            ax.set_title(f"{plot_type} of {col}")
-            st.pyplot(fig)
-
-        elif vis_type == 'Bivariate':
-            x_col = st.selectbox("Select X-axis", df.columns, key='dia_biv_x')
-            y_col = st.selectbox("Select Y-axis", df.columns, key='dia_biv_y')
-            plot_type = st.radio("Plot Type", ['Scatter Plot', 'Line Plot'])
-
-            fig, ax = plt.subplots()
-            if plot_type == 'Scatter Plot':
-                ax.scatter(df[x_col], df[y_col], alpha=0.7, color='darkorange')
-            elif plot_type == 'Line Plot':
-                ax.plot(df[x_col], df[y_col], color='darkblue')
-            ax.set_xlabel(x_col)
-            ax.set_ylabel(y_col)
-            ax.set_title(f"{x_col} vs {y_col}")
-            st.pyplot(fig)
-
-        elif vis_type == 'Multivariate':
-            st.subheader("Correlation Heatmap")
-            corr = df.corr(numeric_only=True)
-            fig, ax = plt.subplots()
-            im = ax.imshow(corr, cmap='coolwarm', interpolation='nearest')
-            ax.set_xticks(range(len(corr.columns)))
-            ax.set_yticks(range(len(corr.columns)))
-            ax.set_xticklabels(corr.columns, rotation=90)
-            ax.set_yticklabels(corr.columns)
-            fig.colorbar(im, ax=ax)
-            st.pyplot(fig)
-
-    except FileNotFoundError:
-        st.error("⚠️ 'diabetes.csv' not found. Please ensure it's in the 'data_preprocessed/' folder.")
-
 elif selected == 'Kidney Disease Predictor':
     st.title("🧠 Kidney Disease Prediction using ML")
 
@@ -380,14 +208,22 @@ elif selected == 'Kidney Disease Predictor':
         except Exception as e:
             st.error(f"Prediction failed: {e}")
 
+elif selected == 'visualizer':
+    st.title("📊 Unified Health Data Visualizer")
 
+    dataset_options = {
+        'Heart': ('data_preprocessed/heart.csv', 'red'),
+        'Lung': ('data_preprocessed/lung.csv', 'orange'),
+        'Diabetes': ('data_preprocessed/diabetes.csv', 'green'),
+        'Kidney': ('data_preprocessed/kidney.csv', 'blue'),
+    }
 
-elif selected == 'Kidney Data Visualizer':
-    st.title("📊 Explore & Visualize Kidney Dataset")
+    dataset_choice = st.selectbox("Select Dataset", list(dataset_options.keys()))
+    file_path, color = dataset_options[dataset_choice]
 
     try:
-        df = pd.read_csv('data_preprocessed/kidney.csv')
-        st.subheader("Dataset Preview")
+        df = pd.read_csv(file_path)
+        st.subheader(f"📁 Preview of {dataset_choice} Dataset")
         st.dataframe(df.head())
 
         vis_type = st.selectbox("Select Visualization Type", ['Univariate', 'Bivariate', 'Multivariate'])
@@ -396,28 +232,26 @@ elif selected == 'Kidney Data Visualizer':
             col = st.selectbox("Select a column", df.columns)
             plot_type = st.radio("Plot Type", ['Histogram', 'Boxplot', 'Line Chart'])
 
-            st.subheader(f"{plot_type} of {col}")
             fig, ax = plt.subplots()
             if plot_type == 'Histogram':
-                ax.hist(df[col].dropna(), bins=20, color='skyblue', edgecolor='black')
+                ax.hist(df[col].dropna(), bins=20, color=color, edgecolor='black')
             elif plot_type == 'Boxplot':
                 ax.boxplot(df[col].dropna())
             elif plot_type == 'Line Chart':
-                ax.plot(df[col].dropna(), color='green')
+                ax.plot(df[col].dropna(), color=color)
             ax.set_title(f"{plot_type} of {col}")
             st.pyplot(fig)
 
         elif vis_type == 'Bivariate':
-            x_col = st.selectbox("Select X-axis", df.columns, key='kidney_biv_x')
-            y_col = st.selectbox("Select Y-axis", df.columns, key='kidney_biv_y')
+            x_col = st.selectbox("Select X-axis", df.columns)
+            y_col = st.selectbox("Select Y-axis", df.columns)
             plot_type = st.radio("Plot Type", ['Scatter Plot', 'Line Plot'])
 
-            st.subheader(f"{plot_type} of {x_col} vs {y_col}")
             fig, ax = plt.subplots()
             if plot_type == 'Scatter Plot':
-                ax.scatter(df[x_col], df[y_col], alpha=0.7, color='purple')
+                ax.scatter(df[x_col], df[y_col], alpha=0.7, color=color)
             elif plot_type == 'Line Plot':
-                ax.plot(df[x_col], df[y_col], color='blue')
+                ax.plot(df[x_col], df[y_col], color=color)
             ax.set_xlabel(x_col)
             ax.set_ylabel(y_col)
             ax.set_title(f"{x_col} vs {y_col}")
@@ -436,4 +270,4 @@ elif selected == 'Kidney Data Visualizer':
             st.pyplot(fig)
 
     except FileNotFoundError:
-        st.error("⚠️ 'kidney.csv' not found. Please ensure it's in the 'data_preprocessed/' folder.")
+        st.error(f"⚠️ '{file_path}' not found. Please ensure the dataset is in place.")
