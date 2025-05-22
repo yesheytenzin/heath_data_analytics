@@ -16,7 +16,6 @@ with st.sidebar:
     selected = option_menu(
     'Health App Menu',
     [
-        'Visualizer',
         'Heart Disease Predictor',
         'Lung Cancer Predictor',
         'Diabetes Predictor',
@@ -26,10 +25,8 @@ with st.sidebar:
     icons=['bar-chart','heart', 'lungs', 'activity', 'droplet', 'bar-chart'],
     default_index=0
 )
-if selected == 'Visualizer':
-    print('hello')
 
-elif selected == 'Heart Disease Predictor':
+if selected == 'Heart Disease Predictor':
     st.title('❤️ Heart Disease Prediction')
 
     col1, col2, col3 = st.columns(3)
