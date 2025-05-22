@@ -16,18 +16,21 @@ with st.sidebar:
     selected = option_menu(
     'Health App Menu',
     [
+        'Visualizer',
         'Heart Disease Predictor',
         'Lung Cancer Predictor',
         'Diabetes Predictor',
         'Kidney Disease Predictor',
-        'visualizer'
+        'Dashboard'
     ],
-    icons=['heart', 'lungs', 'activity', 'droplet', 'bar-chart'],
+    icons=['bar-chart','heart', 'lungs', 'activity', 'droplet', 'bar-chart'],
     default_index=0
 )
+if selected == 'Visualizer':
+    print('hello')
 
-if selected == 'Heart Disease Predictor':
-    st.title('❤️ Heart Disease Prediction using ML')
+elif selected == 'Heart Disease Predictor':
+    st.title('❤️ Heart Disease Prediction')
 
     col1, col2, col3 = st.columns(3)
 
@@ -75,7 +78,7 @@ import pickle
 #     lung_cancer_model = pickle.load(f)
 
 if selected == 'Lung Cancer Predictor':
-    st.title('🫁 Lung Cancer Prediction using ML')
+    st.title('🫁 Lung Cancer Prediction')
 
     col1, col2, col3 = st.columns(3)
 
@@ -121,7 +124,7 @@ if selected == 'Lung Cancer Predictor':
 
 
 elif selected == 'Diabetes Predictor':
-    st.title('🩸 Diabetes Prediction (Scaled Data Version)')
+    st.title('🩸 Diabetes Prediction')
 
     col1, col2 = st.columns(2)
 
@@ -170,7 +173,7 @@ elif selected == 'Diabetes Predictor':
 
 
 elif selected == 'Kidney Disease Predictor':
-    st.title("🧠 Kidney Disease Prediction using ML")
+    st.title("🧠 Kidney Disease Prediction")
 
     col1, col2, col3 = st.columns(3)
 
@@ -208,7 +211,7 @@ elif selected == 'Kidney Disease Predictor':
         except Exception as e:
             st.error(f"Prediction failed: {e}")
 
-elif selected == 'visualizer':
+elif selected == 'Dashboard':
     st.title("📊 Unified Health Data Visualizer")
 
     dataset_options = {
