@@ -1,12 +1,5 @@
-# FaceLink
-
-FaceLink is a random video calling app built using Java and XML, designed to connect users through seamless video communication. Users can set up their profiles, engage in random video calls, and enjoy real-time interactions powered by WebRTC and PeerJS.
-
-# Tecnhologies Used
-- Android: Java and XML
-- WebRTC: Web Real-Time Communication for video and audio streaming
-- Firebase: Authentication, Realtime Database, Storage
-- Glide: Image loading and caching library for smooth image rendering
+# Health Data Analytics
+Dashboard to predict different types of disease and perform data visualization
 
 
 ## Table of Contents
